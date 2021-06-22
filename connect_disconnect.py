@@ -10,10 +10,8 @@ import time
 
 print("Waking up")
 time.sleep(3)
-
 vehicle = connect('com6', wait_ready=True, baud=57600)
 print("Connected")
-
 time.sleep(2)
 
 print("Disconnecting...")

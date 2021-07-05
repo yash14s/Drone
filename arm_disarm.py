@@ -9,6 +9,10 @@ def connect_to_python():
     vehicle = connect('com6', wait_ready=False, baud=57600)
     print("Connected")
 
+def disconnect_to_python():
+    vehicle.close()
+    print("Disconnected")
+    
 def arm_and_disarm():
     while vehicle.is_armable!=True:
         print("Waiting for the vehicle to become armable")
@@ -39,3 +43,4 @@ def arm_and_disarm():
 
 connect_to_python()
 arm_and_disarm()
+disconnect_to_python()

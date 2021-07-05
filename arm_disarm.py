@@ -2,28 +2,14 @@ from dronekit import connect, VehicleMode, LocationGlobalRelative, APIException
 import time
 import socket
 import exceptions
-import math
-import argparse
+global vehicle
 
-def connectMyCopter():
-    parser=argparse.ArgumentParser(description='commands')
-    parser.add_argument('--connect')
-    args=parser.parse_args()
-    
-    connection_string=args.connect
-    
-    if not connection_string:
-        import dronekit_sitl
-        sitl=dronekit_sitl.start_default()
-        connection_string=sitl.connection_string()
-    
-    vehicle=connect(connection_string,wait_ready=True)
-    return vehicle
+def connect_to_python():
+    global vehicle
+    vehicle = connect('com6', wait_ready=False, baud=57600)
+    print("Connected")
 
-vehicle = connect('com6', wait_ready=True, baud=57600)
-print("Connected")
-
-def arm_and_disarm(targetHeight):
+def arm_and_disarm():
     while vehicle.is_armable!=True:
         print("Waiting for the vehicle to become armable")
         time.sleep(1)
@@ -34,7 +20,7 @@ def arm_and_disarm(targetHeight):
         print("Waiting for drone to enter GUIDED flight mode")
         time.sleep(1)
 
-    print("Vehicle now in GUIDED MODE. Have fun!!")
+    print("Vehicle now in GUIDED MODE.")
 
     vehicle.armed=True
 
@@ -42,20 +28,14 @@ def arm_and_disarm(targetHeight):
         print("Waiting for vehicle to become armed")
         time.sleep(1)
 
-    print("Look out! Virtual props are spinning!!")
+    print("Caution! Drone is ARMED!")
+    time.sleep(5)
     
-    vehicle.simple_takeoff(targetHeight)#meters
-    while True:
-        print("Current Altitude: %d"%vehicle.location.global_relative_frame.alt)
-        if vehicle.location.global_relative_frame.alt>=.95*targetHeight:
-            break
-        time.sleep(1)
-    print("Target altitude reached!!")
-    return None
-
+    print("Proceeding to disarm")
     vehicle.armed = False
     while(vehicle.armed==True):
         time.sleep(1)
-    print("Vehicle disarmed")
+    print("Drone is now DISARMED")
 
-arm_and_disarm(10)
+connect_to_python()
+arm_and_disarm()

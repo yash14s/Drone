@@ -2,7 +2,6 @@ from dronekit import connect, VehicleMode, LocationGlobalRelative, APIException
 import time
 import socket
 import exceptions
-global vehicle
 
 def connect_to_python():
     global vehicle

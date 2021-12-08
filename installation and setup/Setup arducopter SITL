@@ -1,0 +1,45 @@
+Before running this setup: 
+Fresh install of Ubuntu server 20.04 on rpi4 
+
+1. We need python3.6 since it is compatible
+i. Download miniconda for arm64 https://repo.anaconda.com/miniconda/Miniconda3-py39_4.9.2-Linux-aarch64.sh 
+ii. Move the sh file to home directory $ bash Miniconda3-py39_4.9.2-Linux-aarch64.sh
+Accept all defaults when prompted
+iii. $ conda init
+iv. Restart terminal
+v. Test installation: $ conda activate base
+vi. $ conda config --set auto_activate_base False
+vii. Restart terminal
+viii. $ conda config --add channels conda-forge
+ix. $ conda create -n py3env python=3.6
+x. $ conda activate py3env
+
+2. Follow [1] 
+i. $ cd ~
+ii. $ sudo apt install git
+iii. $ git clone https://github.com/ArduPilot/ardupilot.git
+iv. $ cd ardupilot
+v. $ git checkout Copter-3.6
+vi. $ git submodule update --init --recursive
+vii. $ pip install matplotlib serial scipy pexpect lxml pymavlink MAVProxy
+viii. $ gedit ~/.bashrc
+Add these lines:
+export PATH=$PATH:$HOME/ardupilot/Tools/autotest
+export PATH=/usr/lib/ccache:$PATH
+ix. $ . ~/.bashrc
+x. $ cd ~/ardupilot/ArduCopter
+xi. $ sim_vehicle.py -w
+If you face a build error regarding SoloGimbal_Parameter.cpp file, then
+a. cd ~/home/ubuntu/ardupilot/libraries/AP_Mount
+b. Update line 112 as per [3]
+c. Build again
+xii. Once the virtual instance of the drone is created, test it:
+a. Open mission planner on PC
+b. Connect to 192.168.29.231 (rpi's IP) on TCP port 5762
+c. Also connect with TCP port 5763 using dronekit. 
+vehicle = connect('tcp:192.168.29.231:5763', wait_ready=True)
+
+Links
+[1] https://www.youtube.com/watch?v=wlkoq65mM2A&list=PLy9nLDKxDN683GqAiJ4IVLquYBod_2oA6&index=2
+[2] https://github.com/Intelligent-Quads/iq_tutorials/blob/master/docs/Installing_Ardupilot.md
+[3] https://github.com/ArduPilot/ardupilot/commit/0142265f678853850923c822ce8637ebd56b2be9

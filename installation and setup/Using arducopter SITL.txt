@@ -1,0 +1,15 @@
+Mission Planner's SITL is not responding to velocity commands, and so we need to follow an alternate method
+
+1. Use Rpi4 to create virtual instance of a drone
+  i. $ cd ~/ardupilot/ArduCopter
+  ii. $ conda activate py3env
+  iii. $ sim_vehicle.py -w 
+       This will launch the virtual drone on TCP port 5760, with TCP ports 5762 and 5763 available for connecting with the drone.
+       
+2. Connect to the virtual drone using dronekit:
+  i. Use the connection string 
+      vehicle = connect('tcp:192.168.29.231:5763', wait_ready=True)
+     Where 192.168.29.231 is the Rpi's IP.
+  
+3. Connect via GCS:
+  i. Connect to TCP port 192.168.29.231:5762

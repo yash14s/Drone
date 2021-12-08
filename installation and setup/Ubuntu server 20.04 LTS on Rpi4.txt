@@ -1,0 +1,29 @@
+Setup of Ubuntu server 20.04 LTS 64-bit on Rpi 4 8GB
+1. Using Raspberry Pi imager, flash Ubuntu server 20.04 LTS 64-bit.
+2. Keeping the SD card in PC, edit the network-config file. It should look like [2]
+3. Put SD card in rpi, connect keyboard and monitor. Power up.
+4. Follow [3]. Reboot
+5. Install a desktop following [4]. Select gdm3 when prompted.
+6. reboot
+7. For enabling remote desktop access, we need xrdp:
+$ sudo apt install xrdp
+$ sudo adduser xrdp ssl-cert  
+$ sudo systemctl restart xrdp
+8. On windows, we use the default RDP client to access ubuntu server's desktop. Follow the prompts. Select 'Mutter' when asked.
+
+
+
+[1] https://ubuntu.com/tutorials/how-to-install-ubuntu-on-your-raspberry-pi#1-overview
+[2]
+wifis:
+  wlan0:
+    dhcp4: true
+    optional: true
+    access-points:
+      "yashveer":
+        password: "t2803wifi"
+      "Yash's V9":
+        password: "abcdefghi"
+[3] https://ubuntu.com/tutorials/how-to-install-ubuntu-on-your-raspberry-pi#4-boot-ubuntu-server
+[4] https://ubuntu.com/tutorials/how-to-install-ubuntu-on-your-raspberry-pi#5-install-a-desktop 
+[5] https://linuxize.com/post/how-to-install-xrdp-on-ubuntu-20-04/

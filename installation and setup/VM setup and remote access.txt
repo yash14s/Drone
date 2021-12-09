@@ -1,0 +1,47 @@
+1. Install VirtualBox as per [1]
+i. Download exe for windows from [2]
+ii. Just follow along the prompts and refer [1]
+
+2. Install Ubuntu 18.04 LTS as per [4]
+i. Download image from [3]
+ii. Now follow [4]
+
+3. Using RDP on HOST PC to access VM's desktop
+i. Download extension pack from [2], ensure that the extension pack version and the virtualbox version are same
+ii. In virtualbox manager, go to Settings -> Display -> Remote Display. Enable server. Replace port 3389 with 5001.
+iii. Use RDP on the host machine to connect with 192.168.29.137:5001 where 192.168.29.137 is the host IP
+
+4. Remote access (same LAN)
+i. In virtualbox manager, go to Settings -> Network -> Adapter 1. Attached to: Bridged Adapter.
+	Now the virtualbox has its own IP on the LAN.
+ii. sudo apt install xrdp
+iii. sudo apt-get install xserver-xorg-core xorgxrdp 
+iv. sudo apt-get install xserver-xorg-input-all
+v. sudo nano /etc/polkit-1/localauthority.conf.d/02-allow-colord.conf
+add these
+
+polkit.addRule(function(action, subject) {
+if ((action.id == “org.freedesktop.color-manager.create-device” || action.id == “org.freedesktop.color-manager.create-profile” || action.id == “org.freedesktop.color-manager.delete-device” || action.id == “org.freedesktop.color-manager.delete-profile” || action.id == “org.freedesktop.color-manager.modify-device” || action.id == “org.freedesktop.color-manager.modify-profile”) && subject.isInGroup(“{group}”))
+{
+return polkit.Result.YES;
+}
+});
+
+vi. sudo ufw allow 3389/tcp
+vii. sudo /etc/init.d/xrdp restart
+viii. sudo systemctl status xrdp
+ix. sudo systemctl enable xrdp
+x. ip a
+	Note the IP address 
+xi. Log out of VM
+xii. Use RDP on remote PC to connect with VM. Note that in login, username must be in small letters, irrespective of what it is.
+
+
+References
+[1] https://www.youtube.com/watch?v=b866-7Y_0KQ&ab_channel=ProgrammingKnowledge2
+[2] https://www.virtualbox.org/wiki/Downloads
+[3] https://releases.ubuntu.com/18.04/
+[4] https://www.youtube.com/watch?v=QbmRXJJKsvs
+[5] https://www.oracle.com/in/virtualization/technologies/vm/downloads/virtualbox-downloads.html#extpack
+[6] https://www.techrepublic.com/article/how-to-connect-to-a-virtualbox-vm-desktop-remotely/
+[7] https://www.youtube.com/watch?v=a0p0y1bN8Tw

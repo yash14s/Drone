@@ -16,7 +16,7 @@ x. $ conda activate py3env
 
 2. Follow [1] 
 i. $ cd ~
-ii. $ sudo apt install git
+ii. $ sudo apt install git gawk ccache
 iii. $ git clone https://github.com/ArduPilot/ardupilot.git
 iv. $ cd ardupilot
 v. $ git checkout Copter-3.6

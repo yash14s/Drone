@@ -1,0 +1,37 @@
+Done on Ubuntu 18.04 LTS VM
+
+1. Install gazebo follow [1]
+i. $ cd
+ii. $ sudo sh -c 'echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable `lsb_release -cs` main" > /etc/apt/sources.list.d/gazebo-stable.list'
+iii. $ wget http://packages.osrfoundation.org/gazebo.key -O - | sudo apt-key add -
+iv. $ sudo apt update
+v. $ sudo apt-get install gazebo9 libgazebo9-dev
+vi. Check installation: $ gazebo
+	If you get an error about REST request-
+	a. nano ~/.ignition/fuel/config.yaml
+		replace api.ignitionfuel.org with fuel.ignitionrobotics.org
+vii. Now close the gazebo window
+
+2. Install gazebo plugin for APM
+i. $ cd
+ii. $ git clone https://github.com/khancyr/ardupilot_gazebo.git
+iii. $ cd ardupilot_gazebo
+iv. $ mkdir build
+v. $ sudo apt install cmake
+vi. $ cmake ..
+vii. $ make -j4
+viii. $ sudo make install
+ix. $ echo 'source /usr/share/gazebo/setup.sh' >> ~/.bashrc
+x. $ echo 'export GAZEBO_MODEL_PATH=~/ardupilot_gazebo/models' >> ~/.bashrc
+xi. $ . ~/.bashrc
+
+3. Run the simulator
+i. In terminal (A) $ gazebo --verbose ~/ardupilot_gazebo/worlds/iris_arducopter_runway.world
+ii. In terminal (B) -
+	a. $ cd ~/ardupilot/ArduCopter/
+	b. $ sim_vehicle.py -v ArduCopter -f gazebo-iris --console
+
+
+Links
+[1] https://www.youtube.com/watch?v=m7hPyJJmWmU&list=PLy9nLDKxDN683GqAiJ4IVLquYBod_2oA6&index=4
+[2] https://github.com/Intelligent-Quads/iq_tutorials/blob/master/docs/installing_gazebo_arduplugin.md

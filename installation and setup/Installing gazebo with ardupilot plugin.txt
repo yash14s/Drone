@@ -29,7 +29,8 @@ xi. $ . ~/.bashrc
 i. In terminal (A) $ gazebo --verbose ~/ardupilot_gazebo/worlds/iris_arducopter_runway.world
 ii. In terminal (B) -
 	a. $ cd ~/ardupilot/ArduCopter/
-	b. $ sim_vehicle.py -v ArduCopter -f gazebo-iris --console
+	b. $ conda activate py3env
+	c. $ sim_vehicle.py -v ArduCopter -f gazebo-iris --console
 
 
 Links

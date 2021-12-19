@@ -1,0 +1,48 @@
+Installation done on Ubuntu 18.04 VM
+
+1. Install ROS Melodic referring [1]
+
+2. Installing MAVROS
+i. $ sudo apt-get install ros-melodic-mavros ros-melodic-mavros-extras
+ii. $ wget https://raw.githubusercontent.com/mavlink/mavros/master/mavros/scripts/install_geographiclib_datasets.sh
+iii. $ chmod a+x install_geographiclib_datasets.sh
+iv. $ sudo ./install_geographiclib_datasets.sh
+v. $ sudo apt-get install ros-melodic-rqt ros-melodic-rqt-common-plugins ros-melodic-rqt-robot-plugins
+
+3. Cloning Intelligent Quad's repo 
+i. $ cd ~/catkin_ws/src
+ii. $ git clone https://github.com/Intelligent-Quads/iq_sim.git
+iii. $ echo "GAZEBO_MODEL_PATH=${GAZEBO_MODEL_PATH}:$HOME/catkin_ws/src/iq_sim/models" >> ~/.bashrc
+iv. $ source ~/.bashrc 
+v. $ cd ~/catkin_ws/
+vi. $ catkin_make
+
+4. ROS with gazebo
+i. Launch IQ's gazebo world in terminal (A):
+	$ roslaunch iq_sim runway.launch
+
+ii. Now we need to launch ArduCopter SITL. Traditionally, we need to run sim_vehicle.py as done in [3], but Intelliquads has created a bash script to make it easy:
+	In a new terminal (B) - 
+	a. $ cd ~/catkin_ws/src/iq_sim/scripts/
+	b. $ ./startsitl.sh
+
+iii. Exploring ROS topics:
+	In a new terminal (C) - 
+	a. $ rostopic list
+	b. $ rostopic echo /gazebo/model_states
+		Returns the drone's position in the local frame
+
+iv. Using MAVROS to get telemetry data:
+	In a new terminal (D) - 
+	a. $ roslaunch iq_sim apm.launch
+	b. In terminal (C), $ rostopic list
+		Now we can see mavros topics, we can see the drone's position in its local frame by running $ rostopic echo /mavros/global_position/local
+
+
+
+Links:
+[1] https://github.com/Team-Aviators-International/ROS/blob/main/install.txt
+[2] https://github.com/Intelligent-Quads/iq_tutorials/blob/master/docs/ros_intro.md
+[3] https://github.com/yash14s/Drone/blob/main/installation%20and%20setup/Installing%20gazebo%20with%20ardupilot%20plugin.txt
+[4] https://ardupilot.org/dev/docs/ros-install.html
+[5] https://github.com/Intelligent-Quads/iq_tutorials/blob/master/docs/ros_intro.md

@@ -1,0 +1,36 @@
+1. Basic C++ GNC program following [1], [2]
+i. Clone IQ's ROS package for GNC -
+	$ cd ~/catkin_ws/src
+	$ git clone https://github.com/Intelligent-Quads/iq_gnc.git
+	iq_gnc ROS package will be cloned now
+ii. We will run square.cpp written by IQ. Ensure that these lines are present inside iq_gnc's CMakeLists.txt -
+	add_executable(square src/square.cpp)
+	target_link_libraries(square ${catkin_LIBRARIES})
+iii. Go through the code's explanation in [1], [2], [4]. Checkout the APIs defined by IQ in [3]
+iv. Build the workspace - 
+	$ cd ~/catkin_ws
+	$ catkin_make
+v. Execute the code - 
+a. Launch Gazebo world
+	$ roslaunch iq_sim runway.launch
+b. Launch SITL 	
+	$ cd ~/catkin_ws/src/iq_sim/scripts/
+	$ conda activate py3env
+	$ ./startsitl.sh
+c. Start MAVROS
+	$ roslaunch iq_sim apm.launch
+d. Visualisation using mission planner (optional)
+	Connect to the SITL drone using TCP.
+e. Run the code
+	$ rosrun iq_gnc square
+	Go to the SITL terminal and set mode to guided
+
+
+
+
+
+Links:
+[1] https://www.youtube.com/watch?v=eRAfeC8OFfs&list=PLy9nLDKxDN683GqAiJ4IVLquYBod_2oA6&index=7
+[2] https://github.com/Intelligent-Quads/iq_tutorials/blob/master/docs/gnc_tutorial.md
+[3] https://github.com/Intelligent-Quads/iq_tutorials/blob/master/docs/GNC_functions_documentation.md
+[4] https://www.youtube.com/watch?v=defn-gVdQEU&list=PLy9nLDKxDN683GqAiJ4IVLquYBod_2oA6&index=8

@@ -1,0 +1,23 @@
+1. Get some open source gazebo models
+i. $ git clone https://github.com/osrf/gazebo_models.git
+ii. $ echo 'export GAZEBO_MODEL_PATH=~/gazebo_ws/gazebo_models:${GAZEBO_MODEL_PATH}' >> ~/.bashrc
+iii. $ source ~/.bashrc
+
+2. Follow IQ's tutorial [1], [2] to recreate their gazebo world. Note that later on we'll create worlds in our own ROS package
+i. Make a new file in ~/catkin_ws/src/iq_sim/worlds/ called hills.world
+ii. Copy paste the sdf code given in [2] in hills.world. This code defines the physics, the drone, and attaches a camera. Need to learn sdf coding for more customisation.
+iii. Create hills.launch in ~/catkin_ws/src/iq_sim/launch as shown in [2]. Copy paste the code.
+iv. $ sudo -s
+	This is done so that file gets saved. 
+v. # roslaunch iq_sim hills.launch
+	A new empty world is launched, with the drone and camera as defined in the sdf code. Now we will proceed to add a terrain and other objects in the world via gazebo's GUI.
+v. Go to the insert tab and add objects and terrain as per [1]
+vi. Override hills.world
+
+
+
+
+Links:
+[1] https://www.youtube.com/watch?v=gpk8mQhhI4s&list=PLy9nLDKxDN683GqAiJ4IVLquYBod_2oA6&index=10
+[2] https://github.com/Intelligent-Quads/iq_tutorials/blob/master/docs/gazebo_world_modeling_intro.md
+

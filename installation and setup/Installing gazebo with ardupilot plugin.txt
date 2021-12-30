@@ -16,14 +16,16 @@ vii. Now close the gazebo window
 i. $ cd
 ii. $ git clone https://github.com/khancyr/ardupilot_gazebo.git
 iii. $ cd ardupilot_gazebo
-iv. $ mkdir build
-v. $ sudo apt install cmake
-vi. $ cmake ..
-vii. $ make -j4
-viii. $ sudo make install
-ix. $ echo 'source /usr/share/gazebo/setup.sh' >> ~/.bashrc
-x. $ echo 'export GAZEBO_MODEL_PATH=~/ardupilot_gazebo/models' >> ~/.bashrc
-xi. $ . ~/.bashrc
+iv. $ git checkout dev
+v. $ mkdir build
+vi. $ cd build
+vii. $ sudo apt install cmake
+viii. $ cmake ..
+ix. $ make -j4
+x. $ sudo make install
+xi. $ echo 'source /usr/share/gazebo/setup.sh' >> ~/.bashrc
+xii. $ echo 'export GAZEBO_MODEL_PATH=~/ardupilot_gazebo/models' >> ~/.bashrc
+xiii. $ . ~/.bashrc
 
 3. Run the simulator
 i. In terminal (A) $ gazebo --verbose ~/ardupilot_gazebo/worlds/iris_arducopter_runway.world

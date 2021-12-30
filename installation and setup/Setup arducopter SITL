@@ -21,19 +21,20 @@ iii. $ git clone https://github.com/ArduPilot/ardupilot.git
 iv. $ cd ardupilot
 v. $ git checkout Copter-3.6
 vi. $ git submodule update --init --recursive
-vii. $ pip install matplotlib serial scipy pexpect lxml pymavlink MAVProxy
-viii. $ gedit ~/.bashrc
+vii. $ sudo apt install build-essential
+viii. $ pip install matplotlib serial scipy pexpect lxml pymavlink MAVProxy
+ix. $ gedit ~/.bashrc
 Add these lines:
 export PATH=$PATH:$HOME/ardupilot/Tools/autotest
 export PATH=/usr/lib/ccache:$PATH
-ix. $ . ~/.bashrc
-x. $ cd ~/ardupilot/ArduCopter
-xi. $ sim_vehicle.py -w
+x. $ . ~/.bashrc
+xi. $ cd ~/ardupilot/ArduCopter
+xii. $ sim_vehicle.py -w
 If you face a build error regarding SoloGimbal_Parameter.cpp file, then
 a. cd ~/home/ubuntu/ardupilot/libraries/AP_Mount
 b. Update line 112 as per [3]
 c. Build again
-xii. Once the virtual instance of the drone is created, test it:
+xiii. Once the virtual instance of the drone is created, test it:
 a. Open mission planner on PC
 b. Connect to 192.168.29.231 (rpi's IP) on TCP port 5762
 c. Also connect with TCP port 5763 using dronekit. 

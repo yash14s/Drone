@@ -2,6 +2,7 @@
 	i. $ cd ~/catkin_ws/src
 	ii. $ git clone --recursive https://github.com/leggedrobotics/darknet_ros.git
 	iii. $ catkin_make
+
 2. Configure YOLO
 	i. $ cd ~/catkin_ws/src/darknet_ros/darknet_ros/config
 	ii. Edit ros.yaml -
@@ -11,6 +12,7 @@
 	iv. Edit darknet_ros.launch - 
 		Change the image topic from /camera/rgb/image_raw to /webcam/image_raw
 		Note that we can choose other yolo models, we need to specify here. As of now, yolov2-tiny is selected. Other models can be configured in ~/catkin_ws/src/darknet_ros/darknet_ros/config
+
 3. Testing in gazebo
 	i. Start gazebo 
 		$ roslaunch iq_sim hills.launch
@@ -22,7 +24,47 @@
 		$ roslaunch darknet_ros darknet_ros.launch
 	iv. Fly the drone around to see object detection in action
 
+4. Writing a subscriber to access the detections made by YOLO
+	i. Go through ~/catkin_ws/src/iq_gnc/src/subscriber_sol.cpp and understand the explanation in [3], [4]
+	ii. In iq_gnc's CMakeLists.txt, add the file as an executable:
+		add_executable(sub_sol src/subscriber_sol.cpp)
+		target_link_libraries(sub_sol ${catkin_LIBRARIES})
+	iii. We have to link iq_gnc with darknet_ros so that the executable inside iq_gnc can access darknet_ros's header files. 
+		a. Inside iq_gnc's CMakeLists.txt - 
+
+		find_package(catkin REQUIRED COMPONENTS
+  		  mavros
+  	  	  std_msgs
+  		  geometry_msgs
+  		  mavros_msgs
+  		  rospy
+		  sensor_msgs
+  		  darknet_ros_msgs
+		)
+
+		b. Inside package.xml - 
+		
+		<build_depend>darknet_ros_msgs</build_depend>
+		<exec_depend>darknet_ros_msgs</exec_depend>
+	
+5. Testing
+	i. Start gazebo 
+		$ roslaunch iq_sim hills.launch
+	ii. Launch SITL
+		$ conda activate py3env
+		$ cd ~/catkin_ws/src/iq_sim/scripts/
+		$ ./startsitl.sh
+	iii. Start YOLO
+		$ roslaunch darknet_ros darknet_ros.launch
+	iv. Execute the subscriber code
+		$ rosrun iq_gnc sub_sol
+	v. Fly the drone around
+
+
 
 References:
 [1] https://www.youtube.com/watch?v=SiVexS6Zrr8&list=PLy9nLDKxDN683GqAiJ4IVLquYBod_2oA6&index=11
 [2] https://github.com/Intelligent-Quads/iq_tutorials/blob/master/docs/intro_to_yolo.md
+[3] https://www.youtube.com/watch?v=LYtpJqYYMB0&list=PLy9nLDKxDN683GqAiJ4IVLquYBod_2oA6&index=13
+[4] https://github.com/Intelligent-Quads/iq_tutorials/blob/master/docs/basic_ros_sub.md
+[5] https://answers.ros.org/question/316431/how-to-make-another-package-node-get-boundingbox-msgs-frome-darknet_ros/

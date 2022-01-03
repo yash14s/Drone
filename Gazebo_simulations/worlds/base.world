@@ -29,7 +29,7 @@
 
     <model name="iris">
       <include>
-        <uri>model://iris_with_standoffs_demo</uri>
+        <uri>model://iris_base</uri>
       </include>
 
     </model>

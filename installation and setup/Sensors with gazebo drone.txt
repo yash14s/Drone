@@ -23,7 +23,7 @@
 	Now gazebo can access all the models that we define inside autonomous_drone and in our world files, we can use model://drone_with_ultrasonic.  
 	iv. Edit model.config if needed. 
 	v. Edit model.sdf
-		Refer [13] to set the parameters. Final sdf file is at [10]
+		Refer [12] to set the parameters. Final sdf file is at [10]
 	vi. Inside autonomous_drone, create base.world [11] with its corresponding launch file.
 	vii. Edit base.world so that we use our new model
 	
@@ -51,8 +51,7 @@ References
 [9] https://forum.arduino.cc/t/hc-sr04-tests-on-accuracy-precision-and-resolution-of-ultrasonic-measurement/236505
 [10] https://github.com/yash14s/Drone/blob/main/Gazebo_simulations/drone_with_ultrasonic/model.sdf
 [11] https://github.com/yash14s/Drone/blob/main/Gazebo_simulations/worlds/base.world
-[12] 
-[13]     <!-- Sonar Sensor -->
+[12]     <!-- Sonar Sensor -->
       <link name="ultrasonic_front">
         <pose>0.18 0 .2 0 0 0</pose>
         <collision name="sonar_collision">

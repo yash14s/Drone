@@ -1,0 +1,118 @@
+1. Find the desired sensor in the list of available plugins [3]. More info in [6]
+
+2. 2-D Lidar is added to the drone in catkin_ws/src/iq_sim/worlds/runway.world following [1], [2] and is present in lidar.world
+	i. $ roslaunch iq_sim lidar.launch
+	ii. $ rostopic list
+	iii. $ rostopic echo /spur/laser/scan
+	iv. Place objects near the drone and observe change in readings
+
+3. Adding a stereo camera
+	i. Inside your ros package, (In this case project_artemis) create a new world called stereo_camera.world, with sdf code from [5]
+	ii. Create stereo_camera.launch as per [5] 
+	iii. Edit stereo_camera.world (analogous to [1])
+	iv. Final stereo_camera.world file is present in [7]
+
+4. Adding ultrasonic sensors
+	For this, we follow another method. We define a model file for the drone where we add the sensors. Then we include this model file in our world.
+	i. Inside your ROS package (in this case autonomous_drone), create a new dir called models. This is where we'll keep all our models
+	ii. Copy the drone_with_sonar dir from ~/catkin_ws/src/iq_sim/models to ~/catkin_ws/src/autonomous_drone/models 
+	iii. Add the ROS package to gazebo's path  
+		a. Rename the dir drone_with_sonar to drone_with_ultrasonic. Replace all instances of drone_with_sonar to drone_with_ultrasonic inside model.sdf and model.config 
+	 	b. $ echo "GAZEBO_MODEL_PATH=${GAZEBO_MODEL_PATH}:$HOME/catkin_ws/src/autonomous_drone/models" >> ~/.bashrc
+		c. $ source ~/.bashrc
+	In our world files, we can use model://drone_with_ultrasonic. Gazebo can access all the models that we define inside autonomous_drone 
+	iv. Edit model.config if needed. 
+	v. Edit model.sdf
+		Refer [11] to set the parameters. Final sdf file is at [10]
+
+References
+[1] https://www.youtube.com/watch?v=0zQ8iFgw6uk&list=PLy9nLDKxDN683GqAiJ4IVLquYBod_2oA6&index=14
+[2] https://github.com/Intelligent-Quads/iq_tutorials/blob/master/docs/adding_a_sensor.md
+[3] http://gazebosim.org/tutorials?tut=ros_gzplugins#Pluginsavailableingazebo_plugins
+[4] http://gazebosim.org/tutorials?tut=ros_gzplugins#Multicamera
+[5] https://github.com/Intelligent-Quads/iq_tutorials/blob/master/docs/gazebo_world_modeling_intro.md
+[6] http://osrf-distributions.s3.amazonaws.com/sdformat/api/1.5.html#joint372
+[7] https://github.com/yash14s/Drone/blob/main/stereo_camera.world
+[8] https://answers.ros.org/question/220484/how-to-create-custom-models-and-include-that-in-world-file/
+[9] https://forum.arduino.cc/t/hc-sr04-tests-on-accuracy-precision-and-resolution-of-ultrasonic-measurement/236505
+[10] https://github.com/yash14s/Drone/blob/main/Gazebo_simulations/drone_with_ultrasonic/model.sdf
+[11]     <!-- Sonar Sensor -->
+      <link name="ultrasonic_front">
+        <pose>0.18 0 .2 0 0 0</pose>
+        <collision name="sonar_collision">
+          <geometry>
+            <box>
+              <size>.01 .01 .01</size>
+            </box>
+          </geometry>
+        </collision>
+
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.01 0.01 0.01</size>
+            </box>
+          </geometry>
+        </visual>
+        <inertial>
+          <mass>0.1</mass>
+          <inertia>
+            <ixx>0.001</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.001</iyy>
+            <iyz>0</iyz>
+            <izz>0.001</izz>
+          </inertia>
+        </inertial>
+        <sensor type="ray" name="sonar_sensor">
+          
+          <visualize>true</visualize>
+          <update_rate>10</update_rate>
+          <ray>
+             <scan>
+                <horizontal>
+                   <samples>10</samples>
+                   <resolution>1</resolution> 
+                   <min_angle>-0.18326</min_angle>
+                   <max_angle>0.18326</max_angle>
+                </horizontal>
+                <vertical>
+                   <samples>10</samples>
+                   <resolution>1</resolution> 
+                   <min_angle>-0.034907</min_angle>
+                   <max_angle>0.034907</max_angle> 
+                </vertical>
+             </scan>
+             <range>
+                <min>0.02</min>
+                <max>4</max>
+                <resolution>0.3</resolution>
+             </range>
+          </ray>
+          <plugin filename="libgazebo_ros_range.so" name="gazebo_ros_range">
+             <gaussianNoise>0.005</gaussianNoise>
+             <alwaysOn>true</alwaysOn>
+             <updateRate>50</updateRate>
+             <topicName>distance_sensor/front</topicName>
+             <frameName>ultrasonic_front</frameName>
+             <radiation>ULTRASONIC</radiation>
+             <fov>0.366519</fov>
+          </plugin>
+        </sensor>
+      </link>
+
+     
+      <joint type="fixed" name="base_sonar_joint">
+        <pose>0 0 0 0 0 0</pose>
+        <parent>iris::base_link</parent>
+        <child>ultrasonic_front</child>
+        <axis>
+          <limit>
+            <lower>0</lower>
+            <upper>0</upper>
+          </limit>
+          <xyz>0 0 1</xyz>
+          <use_parent_model_frame>true</use_parent_model_frame>
+        </axis>
+      </joint>

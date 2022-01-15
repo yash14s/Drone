@@ -11,6 +11,11 @@
 	ii. Create stereo_camera.launch as per [5] 
 	iii. Edit stereo_camera.world (analogous to [1])
 	iv. Final stereo_camera.world file is present in [7]
+	v. Viewing disparity image:
+		a. Launch an instance of stereo_image_proc - 
+			$ ROS_NAMESPACE=multisense_sl/camera rosrun stereo_image_proc stereo_image_proc
+		b. View left, right, and disparity image-
+			$ rosrun image_view stereo_view stereo:=/multisense_sl/camera image:=image_raw
 
 4. Adding ultrasonic sensors
 	For this, we follow another method. We define a model file for the drone where we add the sensors. Then we include this model file in our world.
@@ -36,8 +41,8 @@
 	viii. $ roslaunch autonomous_drone base.launch
 	ix. $ rostopic list
 		Check out /distance/sensor/front and others
-		
-		
+
+
 
 References
 [1] https://www.youtube.com/watch?v=0zQ8iFgw6uk&list=PLy9nLDKxDN683GqAiJ4IVLquYBod_2oA6&index=14

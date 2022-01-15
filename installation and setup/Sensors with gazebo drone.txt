@@ -15,7 +15,7 @@
 		a. Launch an instance of stereo_image_proc - 
 			$ ROS_NAMESPACE=multisense_sl/camera rosrun stereo_image_proc stereo_image_proc
 		b. View left, right, and disparity image-
-			$ rosrun image_view stereo_view stereo:=/multisense_sl/camera image:=image_raw
+			$ rosrun image_view stereo_view stereo:=/multisense_sl/camera image:=image_raw _approximate_sync:=True _queue_size:=10
 
 4. Adding ultrasonic sensors
 	For this, we follow another method. We define a model file for the drone where we add the sensors. Then we include this model file in our world.

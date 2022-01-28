@@ -2,7 +2,7 @@ from dronekit import connect
 from dronekit.mavlink import MAVConnection
 import time
 
-def connect_to_python():
+def connect_to_vehicle():
     global vehicle
     vehicle = connect('/dev/ttyUSB0', wait_ready=False, baud=57600)
     #TCP:
@@ -18,15 +18,15 @@ def connect_to_python():
     #gcs_udp.master.mav.srcComponent = 1
     #gcs_udp.start()
 
-def disconnect_to_python():
+def disconnect_to_vehicle():
     vehicle.close()
     print("Disconnected")
 
-connect_to_python()
+connect_to_vehicle()
 while True:
     try:
         time.sleep(1)
     except KeyboardInterrupt:
         break
     
-disconnect_to_python()
+disconnect_to_vehicle()

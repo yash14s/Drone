@@ -3,7 +3,8 @@ i. $ conda create --name mydroneenv python=2.7
 ii. $ conda activate mydroneenv
 iii. $ pip install opencv-python==4.2.0.32
 iv. $ pip install pygame
-v. $ pip install lxml
+v. sudo apt-get install libxml2-dev libxslt-dev python-dev
+    $ pip install lxml
 vi. $ pip install pyyaml
 vii. $ conda install -c anaconda wxpython
 viii. $ pip install mavproxy

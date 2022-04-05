@@ -1,3 +1,4 @@
+FOR SIMULATION:
 Installation done on Ubuntu 18.04 VM
 
 1. Install ROS Melodic referring [1]
@@ -38,7 +39,35 @@ iv. Using MAVROS to get telemetry data:
 	b. In terminal (C), $ rostopic list
 		Now we can see mavros topics, we can see the drone's position in its local frame by running $ rostopic echo /mavros/global_position/local
 
+************************************************
 
+FOR HARDWARE:
+Installation done on Rpi 4 (8GB RAM) running ubuntu server 20.04 LTS
+
+1. Install ROS Noetic referring [1] 
+
+2. Install MAVROS referring [4]
+	i. $ sudo apt-get install ros-noetic-mavros ros-noetic-mavros-extras
+	ii. $ wget https://raw.githubusercontent.com/mavlink/mavros/master/mavros/scripts/install_geographiclib_datasets.sh
+	iii. $ chmod a+x install_geographiclib_datasets.sh
+	iv. $ sudo ./install_geographiclib_datasets.sh
+	v. $ sudo apt-get install ros-noetic-rqt ros-noetic-rqt-common-plugins ros-noetic-rqt-robot-plugins
+
+3. Connect with FCU over radio telemetry:
+	i. $ roscore
+	ii. $ roslaunch mavros apm.launch fcu_url:=/dev/ttyUSB0:57600
+	The FCU is connected to the ROS ecosystem.
+	Note: If getting RTT too high warning
+		i. $ sudo nano /opt/ros/noetic/share/mavros/launch/apm_config.yaml
+		Decrease timesync_rate to 0.1. This will the reduce the frequency of warning messages
+
+4. Test some simple commands to ensure functionality
+	i. $ rosrun mavros mavsys mode -c 0
+	This will put the drone in mode 0 i.e. stabilize mode. Other modes are listed at [8]
+	ii. $ rosrun mavros mavsafety arm
+	This will arm the drone. To disarm - $ rosrun mavros mavsafety disarm
+	
+ 
 
 Links:
 [1] https://github.com/Team-Aviators-International/ROS/blob/main/install.txt
@@ -46,3 +75,6 @@ Links:
 [3] https://github.com/yash14s/Drone/blob/main/installation%20and%20setup/Installing%20gazebo%20with%20ardupilot%20plugin.txt
 [4] https://ardupilot.org/dev/docs/ros-install.html
 [5] https://github.com/Intelligent-Quads/iq_tutorials/blob/master/docs/ros_intro.md
+[6] http://wiki.ros.org/mavros
+[7] http://wiki.ros.org/mavros#Usage
+[8] http://wiki.ros.org/mavros/CustomModes

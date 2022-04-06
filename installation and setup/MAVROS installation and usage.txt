@@ -9,8 +9,6 @@ ii. $ wget https://raw.githubusercontent.com/mavlink/mavros/master/mavros/script
 iii. $ chmod a+x install_geographiclib_datasets.sh
 iv. $ sudo ./install_geographiclib_datasets.sh
 v. $ sudo apt-get install ros-melodic-rqt ros-melodic-rqt-common-plugins ros-melodic-rqt-robot-plugins
-vi. For ease of use - $ sudo nano /opt/ros/melodic/share/mavros/launch/apm.launch
-	edit the fcu_url parameter to <arg name="fcu_url" default="tcp://192.168.29.189:5762" />
 
 3. Cloning Intelligent Quad's repo 
 i. $ cd ~/catkin_ws/src
@@ -37,7 +35,7 @@ iii. Exploring ROS topics:
 
 iv. Using MAVROS to get telemetry data:
 	In a new terminal (D) - 
-	a. $ roslaunch mavros apm.launch
+	a. $ roslaunch iq_sim apm.launch
 	b. In terminal (C), $ rostopic list
 		Now we can see mavros topics, we can see the drone's position in its local frame by running $ rostopic echo /mavros/global_position/local
 

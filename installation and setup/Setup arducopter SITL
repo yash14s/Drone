@@ -19,10 +19,10 @@ i. $ cd ~
 ii. $ sudo apt install git gawk ccache
 iii. $ git clone https://github.com/ArduPilot/ardupilot.git
 iv. $ cd ardupilot
-v. $ git checkout Copter-3.6
+v. $ git checkout Copter-4.3
 vi. $ git submodule update --init --recursive
 vii. $ sudo apt install build-essential
-viii. $ pip install matplotlib serial scipy pexpect lxml pymavlink MAVProxy
+viii. $ pip install matplotlib serial scipy pexpect lxml pymavlink MAVProxy empy
 ix. $ gedit ~/.bashrc
 Add these lines:
 export PATH=$PATH:$HOME/ardupilot/Tools/autotest

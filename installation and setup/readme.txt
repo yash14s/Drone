@@ -9,3 +9,4 @@ Sequence for Ubuntu 18.04 LTS:
 8. Gazebo world modelling
 9. YOLO with gazebo
 10. Sensors with gazebo drone
+11. swarm_drones

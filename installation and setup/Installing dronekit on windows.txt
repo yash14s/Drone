@@ -1,5 +1,5 @@
 1. Installing dependencies 
-i. $ conda create --name mydroneenv python=2.7
+i. $ conda create --name mydroneenv python=2.7 CHANGE
 ii. $ conda activate mydroneenv
 iii. $ pip install opencv-python==4.2.0.32
 iv. $ pip install pygame

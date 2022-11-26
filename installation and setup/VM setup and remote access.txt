@@ -1,6 +1,7 @@
 1. Install VirtualBox as per [1]
 i. Download exe for windows from [2]
 ii. Just follow along the prompts and refer [1]
+Note: If unable to sudo, use VirtualBox 6.xx
 
 2. Install Ubuntu 18.04 LTS as per [4]
 i. Download image from [3]
